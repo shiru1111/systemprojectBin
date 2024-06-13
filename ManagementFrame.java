@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -141,10 +143,15 @@ public class ManagementFrame extends JFrame {
         Discard_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         Discard_btn.setBounds(593, 562, 152, 40);
         contentPane.add(Discard_btn);
+        
+		JScrollPane message_scrollPane = new JScrollPane();
+		message_scrollPane.setBounds(59, 242, 708, 294);
+		contentPane.add(message_scrollPane);
 
-        JScrollPane message_scrollPane = new JScrollPane();
-        message_scrollPane.setBounds(59, 242, 708, 294);
-        contentPane.add(message_scrollPane);
+		JTextArea message_area = new JTextArea();
+		message_scrollPane.setViewportView(message_area);
+		message_area.setLineWrap(true);
+		message_area.setFont(new Font("Monospaced", Font.PLAIN, 23));
 
         JLabel Year_title = new JLabel("Year:");
         Year_title.setFont(new Font("Tahoma", Font.PLAIN, 20));
