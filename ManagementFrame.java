@@ -119,7 +119,9 @@ public class ManagementFrame extends JFrame {
                 
                 String date = month + "/" + day + "/" + year;
                 
-                tabbedPane.updateDrops(name, email, date);
+                String messageType = (String) message_type.getSelectedItem(); // Get selected message type
+                
+                tabbedPane.updateDrops(name, email, date, messageType); // Update drops with messageType
                 
                 // Hide ManagementFrame
                 setVisible(false);
@@ -129,7 +131,7 @@ public class ManagementFrame extends JFrame {
                     tabbedPane.setVisible(true);
                 }
             }
-       
+
         });
         draft_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         draft_btn.setBounds(341, 562, 152, 40);
