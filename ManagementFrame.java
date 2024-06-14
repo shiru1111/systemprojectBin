@@ -10,14 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ManagementFrame extends JFrame {
-
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField sender;
@@ -34,11 +31,10 @@ public class ManagementFrame extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    tabbedpane tabbedPane = new tabbedpane(); // Create tabbedpane instance
-                    tabbedPane.setVisible(false); // Initially hide tabbedpane
-
-                    ManagementFrame frame = new ManagementFrame(tabbedPane); // Create ManagementFrame instance
-                    frame.setVisible(true); // Make ManagementFrame visible
+                    tabbedpane tabbedPane = new tabbedpane();
+                    tabbedPane.setVisible(false);
+                    ManagementFrame frame = new ManagementFrame(tabbedPane);
+                    frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -110,30 +106,30 @@ public class ManagementFrame extends JFrame {
         draft_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String name = sender.getText().trim();
-                String email = receiver.getText().trim();
-
+                String email = receiver.getText().trim(); 
                 String day = (String) day_selection.getSelectedItem();
                 String month = (String) month_selection.getSelectedItem();
                 String year = (String) year_selection.getSelectedItem();
-
+                
                 // Format day and month to always have two digits
                 day = day.length() == 1 ? "0" + day : day;
-
                 // Get month index and add 1 to match the real month number
                 int monthIndex = month_selection.getSelectedIndex() + 1;
                 month = monthIndex < 10 ? "0" + monthIndex : String.valueOf(monthIndex);
-
+                
                 String date = month + "/" + day + "/" + year;
-
+                
                 tabbedPane.updateDrops(name, email, date);
-
-                // Toggle visibility of tabbedpane
+                
+                // Hide ManagementFrame
+                setVisible(false);
+                
+                // Show tabbedPane if it's not visible
                 if (!tabbedPane.isVisible()) {
                     tabbedPane.setVisible(true);
-                } else {
-                    tabbedPane.setVisible(false);
                 }
             }
+       
         });
         draft_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         draft_btn.setBounds(341, 562, 152, 40);
@@ -143,15 +139,15 @@ public class ManagementFrame extends JFrame {
         Discard_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         Discard_btn.setBounds(593, 562, 152, 40);
         contentPane.add(Discard_btn);
-        
-		JScrollPane message_scrollPane = new JScrollPane();
-		message_scrollPane.setBounds(59, 242, 708, 294);
-		contentPane.add(message_scrollPane);
 
-		JTextArea message_area = new JTextArea();
-		message_scrollPane.setViewportView(message_area);
-		message_area.setLineWrap(true);
-		message_area.setFont(new Font("Monospaced", Font.PLAIN, 23));
+        JScrollPane message_scrollPane = new JScrollPane();
+        message_scrollPane.setBounds(59, 242, 708, 294);
+        contentPane.add(message_scrollPane);
+
+        JTextArea message_area = new JTextArea();
+        message_scrollPane.setViewportView(message_area);
+        message_area.setLineWrap(true);
+        message_area.setFont(new Font("Monospaced", Font.PLAIN, 23));
 
         JLabel Year_title = new JLabel("Year:");
         Year_title.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -159,8 +155,7 @@ public class ManagementFrame extends JFrame {
         contentPane.add(Year_title);
 
         String days[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-                         "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
-
+                        "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
         day_selection = new JComboBox<>(days);
         day_selection.setFont(new Font("Tahoma", Font.PLAIN, 20));
         day_selection.setBounds(439, 110, 69, 34);
@@ -172,7 +167,6 @@ public class ManagementFrame extends JFrame {
         contentPane.add(day_title);
 
         String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
         month_selection = new JComboBox<>(months);
         month_selection.setFont(new Font("Tahoma", Font.PLAIN, 20));
         month_selection.setBounds(167, 110, 179, 34);
