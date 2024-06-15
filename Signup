@@ -1,0 +1,182 @@
+package javaswingtest;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
+
+public class Signup extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtFirst;
+	private JTextField txtLast;
+	private JTextField txtUser;
+	private JTextField txtEmail;
+	private JPasswordField passwordInput;
+	private JPasswordField passwordConfirm;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Signup frame = new Signup();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Signup() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 517, 444);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		txtFirst = new JTextField();
+		txtFirst.setBounds(149, 59, 157, 20);
+		contentPane.add(txtFirst);
+		txtFirst.setColumns(10);
+		
+		JLabel lblFirst = new JLabel("First Name");
+		lblFirst.setBounds(88, 62, 79, 14);
+		contentPane.add(lblFirst);
+		
+		JLabel lblLast = new JLabel("Last Name");
+		lblLast.setBounds(88, 92, 79, 14);
+		contentPane.add(lblLast);
+		
+		txtLast = new JTextField();
+		txtLast.setColumns(10);
+		txtLast.setBounds(149, 90, 157, 20);
+		contentPane.add(txtLast);
+		
+		JLabel lblBirthday = new JLabel("Birthday");
+		lblBirthday.setBounds(88, 285, 61, 14);
+		contentPane.add(lblBirthday);
+		
+		JLabel lblCreate = new JLabel("Create Account");
+		lblCreate.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblCreate.setBounds(143, 23, 163, 14);
+		contentPane.add(lblCreate);
+		
+		JComboBox cboMonth = new JComboBox();
+		cboMonth.setEditable(false);
+		cboMonth.setBounds(149, 277, 68, 22);
+		contentPane.add(cboMonth);
+		
+		cboMonth.setModel(new DefaultComboBoxModel(new String[] {"Jan", "Feb", "March", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"}));
+		cboMonth.setSelectedIndex(-1);
+		
+		JComboBox cboDay = new JComboBox();
+		cboDay.setEditable(false);
+		cboDay.setBounds(227, 277, 68, 22);
+		contentPane.add(cboDay);
+		
+		cboDay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		cboDay.setSelectedIndex(-1);
+		
+		JComboBox cboYear = new JComboBox();
+		cboYear.setEditable(false);
+		cboYear.setBounds(305, 277, 68, 22);
+		contentPane.add(cboYear);
+		
+		cboYear.setModel(new DefaultComboBoxModel(new String[] {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001",
+				"2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2014", "2015", "2016", "2017", "2018", "2019", "2020"}));
+		cboYear.setSelectedIndex(-1);
+		
+		JButton btnConfirm = new JButton("Create Account");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String firstname = txtFirst.getText();
+	               String lastname = txtLast.getText();
+	               String password = new String(passwordInput.getPassword());
+	               String confirm = new String(passwordConfirm.getPassword());
+	               String username = txtUser.getText();
+	               String email = txtEmail.getText();
+	               if (firstname.isEmpty() || lastname.isEmpty() || password.isEmpty() || confirm.isEmpty() ||
+	            		   username.isEmpty() || email.isEmpty()) {
+	                   JOptionPane.showMessageDialog(null, "Please input your details.", "Error", JOptionPane.ERROR_MESSAGE);
+	               }else if(password.equals(confirm)) {
+	            	   LoginAccount LoginAccount= new LoginAccount();
+	                   LoginAccount.setVisible(true);
+	                   dispose();
+	               }else{
+	            	   JOptionPane.showMessageDialog(null, "The password does not match", "Error", JOptionPane.ERROR_MESSAGE);
+	            	   
+	               }
+		}
+	});
+		btnConfirm.setBounds(149, 345, 157, 23);
+		contentPane.add(btnConfirm);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(88, 127, 79, 14);
+		contentPane.add(lblPassword);
+		
+		JLabel lblConfirm = new JLabel("Confirm Password");
+		lblConfirm.setBounds(38, 160, 120, 14);
+		contentPane.add(lblConfirm);
+		
+		JLabel lblUser = new JLabel("Username");
+		lblUser.setBounds(88, 185, 79, 14);
+		contentPane.add(lblUser);
+		
+		txtUser = new JTextField();
+		txtUser.setColumns(10);
+		txtUser.setBounds(149, 185, 157, 20);
+		contentPane.add(txtUser);
+		
+		JLabel lblEmaill = new JLabel("Emaill");
+		lblEmaill.setBounds(88, 216, 79, 14);
+		contentPane.add(lblEmaill);
+		
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(149, 216, 157, 20);
+		contentPane.add(txtEmail);
+		
+		JLabel lblNewLabel = new JLabel("juandelacruz@gmail.com");
+		lblNewLabel.setBounds(177, 237, 157, 14);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblExample = new JLabel("Ex.");
+		lblExample.setBounds(149, 237, 38, 14);
+		contentPane.add(lblExample);
+		
+		passwordInput = new JPasswordField();
+		passwordInput.setBounds(149, 121, 157, 20);
+		contentPane.add(passwordInput);
+		
+		passwordConfirm = new JPasswordField();
+		passwordConfirm.setBounds(149, 152, 157, 20);
+		contentPane.add(passwordConfirm);
+	}
+}
+
