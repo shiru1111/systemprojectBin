@@ -1,1 +1,129 @@
+package javaswingtest;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+public class RecycleBin extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    private tabbedpane tabbedPane;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                	tabbedpane tabbedPane = new tabbedpane();
+                    tabbedPane.setVisible(true);
+                    RecycleBin frame = new RecycleBin(tabbedPane);
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public RecycleBin(tabbedpane tabbedPane) {
+        this.tabbedPane = tabbedPane;
+        setTitle("RecycleBin");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 800, 600);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(new BorderLayout(0, 0));
+        setContentPane(contentPane);
+
+        // Table model and JTable (without File Name column)
+        tableModel = new DefaultTableModel(
+            new Object[][] {
+                {"Sender1", "Receiver1", "Date1", "MessageType1"},
+                {"Sender2", "Receiver2", "Date2", "MessageType2"},
+                {"Sender3", "Receiver3", "Date3", "MessageType3"},
+            },
+            new String[] {
+                "Sender", "Receiver", "Date", "MessageType"
+            }
+        );
+        table = new JTable(tableModel);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(table);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+
+        // Panel for buttons
+        JPanel buttonPanel = new JPanel();
+        contentPane.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Restore button
+        JButton btnRestore = new JButton("Restore");
+        btnRestore.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    String sender = (String) tableModel.getValueAt(selectedRow, 0);
+                    String receiver = (String) tableModel.getValueAt(selectedRow, 1);
+                    String date = (String) tableModel.getValueAt(selectedRow, 2);
+                    String messageType = (String) tableModel.getValueAt(selectedRow, 3);
+                    tabbedPane.updateDrops(sender, receiver, date, messageType);
+                    tableModel.removeRow(selectedRow);
+                }
+            }
+        });
+        buttonPanel.add(btnRestore);
+
+        // Delete all button
+        JButton btnDeleteAll = new JButton("Delete All");
+        btnDeleteAll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Add your delete all logic here
+                System.out.println("Deleting all files");
+                tableModel.setRowCount(0);
+            }
+        });
+        buttonPanel.add(btnDeleteAll);
+
+        // Delete button
+        JButton btnDelete = new JButton("Delete");
+        btnDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    // No need to retrieve file name since it's no longer in the table
+                    // Add your delete logic here
+                    System.out.println("Deleting selected file");
+                    tableModel.removeRow(selectedRow);
+                }
+            }
+        });
+        buttonPanel.add(btnDelete);
+
+        // Back button
+        JButton btnBack = new JButton("Back");
+        btnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane.setVisible(true);
+                dispose();
+            }
+        });
+        buttonPanel.add(btnBack);
+    }
+}
 
