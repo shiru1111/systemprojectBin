@@ -1,0 +1,111 @@
+package javaswingtest;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+
+public class ForgotPassword extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtEmail;
+	private JPasswordField passwordNew;
+	private JPasswordField passwordConfirm;
+	private JLabel lblNewLabel;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ForgotPassword frame = new ForgotPassword();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ForgotPassword() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 504, 364);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(109, 83, 46, 14);
+		contentPane.add(lblEmail);
+		
+		txtEmail = new JTextField();
+		txtEmail.setBounds(153, 80, 197, 20);
+		contentPane.add(txtEmail);
+		txtEmail.setColumns(10);
+		
+		JLabel lblNewPassword = new JLabel("New Password");
+		lblNewPassword.setBounds(38, 124, 102, 14);
+		contentPane.add(lblNewPassword);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+	               String password = new String(passwordNew.getPassword());
+	               String confirm = new String(passwordConfirm.getPassword());
+	               String email = txtEmail.getText();
+	               if (password.isEmpty() || confirm.isEmpty() || email.isEmpty()) {
+	                   JOptionPane.showMessageDialog(null, "Invalid! Try Again!", "Error", JOptionPane.ERROR_MESSAGE);
+	               }else if(password.equals(confirm)) {
+	            	   LoginAccount LoginAccount= new LoginAccount();
+	                   LoginAccount.setVisible(true);
+	                   dispose();
+	               }else{
+	            	   JOptionPane.showMessageDialog(null, "The password does not match", "Error", JOptionPane.ERROR_MESSAGE);
+	            	   
+	               }
+		}
+	});
+				
+		btnSave.setBounds(212, 234, 89, 23);
+		contentPane.add(btnSave);
+		
+		JLabel lblConfirmPassword = new JLabel("Confirm Password");
+		lblConfirmPassword.setBounds(38, 160, 117, 14);
+		contentPane.add(lblConfirmPassword);
+		
+		passwordNew = new JPasswordField();
+		passwordNew.setBounds(153, 121, 197, 20);
+		contentPane.add(passwordNew);
+		
+		passwordConfirm = new JPasswordField();
+		passwordConfirm.setBounds(153, 157, 197, 20);
+		contentPane.add(passwordConfirm);
+		
+		lblNewLabel = new JLabel("Forgot Password");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(172, 23, 161, 23);
+		contentPane.add(lblNewLabel);
+	}
+
+}
+
+
