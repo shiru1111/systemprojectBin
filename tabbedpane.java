@@ -143,6 +143,7 @@ public class tabbedpane extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ManagementFrame managementFrame = new ManagementFrame(tabbedpane.this);
                 managementFrame.setVisible(true);
+                dispose();
             }
         });
         
