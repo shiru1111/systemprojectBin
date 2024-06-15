@@ -33,7 +33,7 @@ public class tabbedpane extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    tabbedpane frame = new tabbedpane();
+                	tabbedpane frame = new tabbedpane();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -46,7 +46,7 @@ public class tabbedpane extends JFrame {
      * Create the frame.
      */
     public tabbedpane() {
-    	setTitle("Emails");
+        setTitle("Emails");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel(new BorderLayout());
@@ -146,21 +146,20 @@ public class tabbedpane extends JFrame {
                 dispose();
             }
         });
-        
-                JButton deleteButton = new JButton("Delete");
-                buttonPanel.add(deleteButton);
         buttonPanel.add(composeButton);
-        
-                JButton movetobinButton = new JButton("Bin");
-                movetobinButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        // Perform action for Move to Bin button if needed
-                    	RecycleBin recycle = new RecycleBin();
-                    			recycle.setVisible(true);
-                    	dispose();
-                    }
-                });
-                buttonPanel.add(movetobinButton);
+
+        JButton deleteButton = new JButton("Delete");
+        buttonPanel.add(deleteButton);
+
+        JButton moveToBinButton = new JButton("Bin");
+        moveToBinButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RecycleBin recycle = new RecycleBin(tabbedpane.this);
+                recycle.setVisible(true);
+                dispose();
+            }
+        });
+        buttonPanel.add(moveToBinButton);
 
         // Initially select the first tab
         tabbedPane.setSelectedIndex(0);
