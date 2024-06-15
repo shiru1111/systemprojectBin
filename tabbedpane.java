@@ -46,6 +46,7 @@ public class tabbedpane extends JFrame {
      * Create the frame.
      */
     public tabbedpane() {
+    	setTitle("Emails");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel(new BorderLayout());
@@ -55,7 +56,7 @@ public class tabbedpane extends JFrame {
         contentPane.add(tabbedPane, BorderLayout.CENTER);
 
         // Column names for all tabs
-        String[] columnNames = {"Name", "Email", "Date", "MessageType"};
+        String[] columnNames = {"Sender", "Receiver", "Date", "MessageType"};
 
         // Inbox tab
         Object[][] inboxData = {
@@ -137,14 +138,6 @@ public class tabbedpane extends JFrame {
         });
         buttonPanel.add(confirmButton);
 
-        JButton movetobinButton = new JButton("Move to bin");
-        movetobinButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Perform action for Move to Bin button if needed
-            }
-        });
-        buttonPanel.add(movetobinButton);
-
         JButton composeButton = new JButton("Compose");
         composeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -152,10 +145,21 @@ public class tabbedpane extends JFrame {
                 managementFrame.setVisible(true);
             }
         });
+        
+                JButton deleteButton = new JButton("Delete");
+                buttonPanel.add(deleteButton);
         buttonPanel.add(composeButton);
-
-        JButton deleteButton = new JButton("Delete");
-        buttonPanel.add(deleteButton);
+        
+                JButton movetobinButton = new JButton("Bin");
+                movetobinButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        // Perform action for Move to Bin button if needed
+                    	RecycleBin recycle = new RecycleBin();
+                    			recycle.setVisible(true);
+                    	dispose();
+                    }
+                });
+                buttonPanel.add(movetobinButton);
 
         // Initially select the first tab
         tabbedPane.setSelectedIndex(0);
