@@ -1,18 +1,20 @@
 package javaswingtest;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class ManagementFrame extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -98,6 +100,39 @@ public class ManagementFrame extends JFrame {
         contentPane.add(message_title);
 
         JButton Send_btn = new JButton("Send");
+
+        Send_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String name = sender.getText().trim();
+                String email = receiver.getText().trim();
+                String day = (String) day_selection.getSelectedItem();
+                String month = (String) month_selection.getSelectedItem();
+                String year = (String) year_selection.getSelectedItem();
+
+                // Format day and month to always have two digits
+                day = day.length() == 1 ? "0" + day : day;
+                // Get month index and add 1 to match the real month number
+                int monthIndex = month_selection.getSelectedIndex() + 1;
+                month = monthIndex < 10 ? "0" + monthIndex : String.valueOf(monthIndex);
+
+                String date = month + "/" + day + "/" + year;
+
+                String messageType = (String) message_type.getSelectedItem(); // Get selected message type
+
+                tabbedPane.updateOutbox(name, email, date, messageType); // Update outbox with messageType
+
+                // Hide ManagementFrame
+                setVisible(false);
+
+                // Show Outbox tab in tabbedPane
+                tabbedPane.showOutboxTab();
+
+                // Show tabbedPane if it's not visible
+                if (!tabbedPane.isVisible()) {
+                    tabbedPane.setVisible(true);
+                }
+            }
+        });
         Send_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         Send_btn.setBounds(85, 562, 152, 40);
         contentPane.add(Send_btn);
@@ -106,26 +141,26 @@ public class ManagementFrame extends JFrame {
         draft_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String name = sender.getText().trim();
-                String email = receiver.getText().trim(); 
+                String email = receiver.getText().trim();
                 String day = (String) day_selection.getSelectedItem();
                 String month = (String) month_selection.getSelectedItem();
                 String year = (String) year_selection.getSelectedItem();
-                
+
                 // Format day and month to always have two digits
                 day = day.length() == 1 ? "0" + day : day;
                 // Get month index and add 1 to match the real month number
                 int monthIndex = month_selection.getSelectedIndex() + 1;
                 month = monthIndex < 10 ? "0" + monthIndex : String.valueOf(monthIndex);
-                
+
                 String date = month + "/" + day + "/" + year;
-                
+
                 String messageType = (String) message_type.getSelectedItem(); // Get selected message type
-                
+
                 tabbedPane.updateDrops(name, email, date, messageType); // Update drops with messageType
-                
+
                 // Hide ManagementFrame
                 setVisible(false);
-                
+
                 // Show tabbedPane if it's not visible
                 if (!tabbedPane.isVisible()) {
                     tabbedPane.setVisible(true);
@@ -157,7 +192,7 @@ public class ManagementFrame extends JFrame {
         contentPane.add(Year_title);
 
         String days[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-                        "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+                "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
         day_selection = new JComboBox<>(days);
         day_selection.setFont(new Font("Tahoma", Font.PLAIN, 20));
         day_selection.setBounds(439, 110, 69, 34);
