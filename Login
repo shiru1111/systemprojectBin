@@ -1,0 +1,133 @@
+package javaswingtest;
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+public class LoginAccount extends JFrame {
+  // Serial version UID for ensuring compatibility during serialization
+  private static final long serialVersionUID = 1L;
+  // Components for the main content pane
+  private JPanel contentPane;
+  private JTextField textFieldUsername;
+  private JPasswordField passwordField;
+  /**
+   * Launch the application.
+   */
+  public static void main(String[] args) {
+      // Schedule a job for the event-dispatching thread: creating and showing this application's GUI.
+      EventQueue.invokeLater(new Runnable() {
+          public void run() {
+              try {
+                  // Create and display the application's main frame
+                  LoginAccount frame = new LoginAccount();
+                  frame.setVisible(true);
+              } catch (Exception e) {
+                  // Print stack trace if an exception occurs
+                  e.printStackTrace();
+              }
+          }
+      });
+  }
+  /**
+   * Create the frame.
+   */
+  public LoginAccount() {
+      // Set the title of the window
+      setTitle("Email Bin Management System (Bin-e)");
+      // Define the default close operation
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      // Set the bounds of the window (x, y, width, height)
+      setBounds(100, 100, 450, 300);
+      // Initialize the content pane with an empty border
+      contentPane = new JPanel();
+      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+      // Set the content pane for the frame
+      setContentPane(contentPane);
+      contentPane.setLayout(null);
+      // Label for the title
+      JLabel lblTitle = new JLabel("Email Bin Management System (Bin-e)");
+      lblTitle.setBounds(58, 20, 350, 14);
+      contentPane.add(lblTitle);
+      // Label for the username
+      JLabel lblUsername = new JLabel("Username:");
+      lblUsername.setBounds(58, 82, 77, 14);
+      contentPane.add(lblUsername);
+      // Text field for entering the username
+      textFieldUsername = new JTextField();
+      textFieldUsername.setBounds(145, 79, 200, 20);
+      contentPane.add(textFieldUsername);
+      textFieldUsername.setColumns(10);
+      // Label for the password
+      JLabel lblPassword = new JLabel("Password:");
+      lblPassword.setBounds(58, 128, 77, 14);
+      contentPane.add(lblPassword);
+      // Password field for entering the password
+      passwordField = new JPasswordField();
+      passwordField.setBounds(145, 125, 200, 20);
+      contentPane.add(passwordField);
+      // Checkbox for "Remember me" option
+      JCheckBox chckbxRememberMe = new JCheckBox("Remember me");
+      chckbxRememberMe.setBounds(119, 149, 121, 23);
+      contentPane.add(chckbxRememberMe);
+      JButton btnForgot = new JButton("Forgot Password?");
+      btnForgot.addActionListener(new ActionListener() {
+   	   public void actionPerformed(ActionEvent e) {
+   		   ForgotPassword ForgotPassword = new ForgotPassword();
+   		   ForgotPassword.setVisible(true);
+   	   }
+      });
+      btnForgot.setBounds(268, 156, 140, 16);
+      contentPane.add(btnForgot);
+     
+     
+     
+     
+     
+     
+     
+      // Button for logging in
+      JButton btnLogin = new JButton("Login");
+      btnLogin.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+              // Retrieve the username and password from the text fields
+              String username = textFieldUsername.getText();
+              String password = new String(passwordField.getPassword());
+              // Check if either username or password is empty
+              if (username.isEmpty() || password.isEmpty()) {
+                  // Show an error message dialog if any field is empty
+                  JOptionPane.showMessageDialog(null, "Invalid! Try Again!", "Error", JOptionPane.ERROR_MESSAGE);
+              } else {
+                  // Open a new frame upon successful login
+                  Setup Setup = new Setup();
+                  Setup.setVisible(true);
+                 
+                  // Dispose the current frame to close the login window
+                  dispose();
+              }
+          }
+      });
+      btnLogin.setBounds(145, 190, 89, 23);
+      contentPane.add(btnLogin);
+      JButton btnSignUp = new JButton("Sign up");
+      btnSignUp.addActionListener(new ActionListener() {
+      	public void actionPerformed(ActionEvent e) {
+      		Signup Signup = new Signup();
+           Signup.setVisible(true);
+      	}
+      });
+      btnSignUp.setBounds(245, 190, 89, 23);    
+  ;
+ 
+      contentPane.add(btnSignUp);
+  }
+}
