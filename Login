@@ -84,6 +84,8 @@ public class LoginAccount extends JFrame {
    	   public void actionPerformed(ActionEvent e) {
    		   ForgotPassword ForgotPassword = new ForgotPassword();
    		   ForgotPassword.setVisible(true);
+           dispose();
+
    	   }
       });
       btnForgot.setBounds(268, 156, 140, 16);
@@ -116,16 +118,18 @@ public class LoginAccount extends JFrame {
               }
           }
       });
-      btnLogin.setBounds(145, 190, 89, 23);
+      btnLogin.setBounds(237, 190, 89, 23);
       contentPane.add(btnLogin);
       JButton btnSignUp = new JButton("Sign up");
       btnSignUp.addActionListener(new ActionListener() {
       	public void actionPerformed(ActionEvent e) {
+            dispose();
+
       		Signup Signup = new Signup();
            Signup.setVisible(true);
       	}
       });
-      btnSignUp.setBounds(245, 190, 89, 23);    
+      btnSignUp.setBounds(121, 190, 89, 23);    
   ;
  
       contentPane.add(btnSignUp);
