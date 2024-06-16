@@ -172,10 +172,7 @@ public class ManagementFrame extends JFrame {
         draft_btn.setBounds(341, 562, 152, 40);
         contentPane.add(draft_btn);
 
-        JButton Discard_btn = new JButton("Discard");
-        Discard_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        Discard_btn.setBounds(593, 562, 152, 40);
-        contentPane.add(Discard_btn);
+ 
 
         JScrollPane message_scrollPane = new JScrollPane();
         message_scrollPane.setBounds(59, 242, 708, 294);
@@ -185,6 +182,26 @@ public class ManagementFrame extends JFrame {
         message_scrollPane.setViewportView(message_area);
         message_area.setLineWrap(true);
         message_area.setFont(new Font("Monospaced", Font.PLAIN, 23));
+        
+        JButton Discard_btn = new JButton("Discard");
+        Discard_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        Discard_btn.setBounds(593, 562, 152, 40);
+        contentPane.add(Discard_btn);
+
+        Discard_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                sender.setText("");
+                receiver.setText("");
+                message_area.setText("");
+                day_selection.setSelectedIndex(0);
+                month_selection.setSelectedIndex(0);
+                year_selection.setSelectedIndex(0);
+                message_type.setSelectedIndex(0); // Reset message type if needed
+            }
+        });
+        Discard_btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        Discard_btn.setBounds(593, 562, 152, 40);
+        contentPane.add(Discard_btn);
 
         JLabel Year_title = new JLabel("Year:");
         Year_title.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -208,6 +225,7 @@ public class ManagementFrame extends JFrame {
         month_selection.setFont(new Font("Tahoma", Font.PLAIN, 20));
         month_selection.setBounds(167, 110, 179, 34);
         contentPane.add(month_selection);
+        
 
         JLabel day_title_1 = new JLabel("Month:");
         day_title_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
