@@ -6,7 +6,7 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,6 +25,7 @@ public class tabbedpane extends JFrame {
     private DefaultTableModel outboxTableModel;
     private DefaultTableModel dropsTableModel;
     private JTabbedPane tabbedPane;
+    private RecycleBin recycleBin;
 
     /**
      * Launch the application.
@@ -55,6 +56,8 @@ public class tabbedpane extends JFrame {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         contentPane.add(tabbedPane, BorderLayout.CENTER);
 
+        recycleBin = new RecycleBin(this);
+
         // Column names for all tabs
         String[] columnNames = {"Sender", "Receiver", "Date", "MessageType"};
 
@@ -83,11 +86,10 @@ public class tabbedpane extends JFrame {
 
         // Outbox tab
         Object[][] outboxData = {
-            {"Alice", "alice@example.com", "1/23/24", "Outbox"},
-            {"Bob", "bob@example.com", "1/23/24", "Outbox"},
-            {"Charlie", "charlie@example.com", "1/23/24", "Outbox"},
-            {"David", "david@example.com", "1/23/24", "Outbox"},
-            {"Eve", "eve@example.com", "1/23/24", "Outbox"},
+            {"Ellana", "ruka@example.com", "1/23/24", "Outbox"},
+            {"Espedida", "espidider@example.com", "1/23/24", "Outbox"},
+            {"Reyes", "shiru@example.com", "1/23/24", "Outbox"},
+
         };
         JPanel outboxPanel = new JPanel(new BorderLayout());
         tabbedPane.addTab("Outbox", outboxPanel);
@@ -106,11 +108,9 @@ public class tabbedpane extends JFrame {
 
         // Drafts tab
         Object[][] dropsData = {
-            {"John", "john@example.com", "1/22/24", "Drafts"},
-            {"Jane", "jane@example.com", "1/22/24", "Drafts"},
-            {"Jack", "jack@example.com", "1/22/24", "Drafts"},
-            {"Jill", "jill@example.com", "1/22/24", "Drafts"},
-            {"Jim", "jim@example.com", "1/22/24", "Drafts"},
+            {"Ramos", "rere@example.com", "1/22/24", "Drafts"},
+            {"Molo", "myzkaji@example.com", "1/22/24", "Drafts"},
+
         };
         JPanel dropsPanel = new JPanel(new BorderLayout());
         tabbedPane.addTab("Drafts", dropsPanel);
@@ -130,10 +130,52 @@ public class tabbedpane extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton confirmButton = new JButton("Confirm");
+        JButton confirmButton = new JButton("View");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Perform action for Confirm button if needed
+                int tabIndex = tabbedPane.getSelectedIndex();
+                JTable table = null;
+                DefaultTableModel model = null;
+                
+                // Determine which table is currently active
+                switch (tabIndex) {
+                    case 0: // Inbox tab
+                        table = inboxTable;
+                        model = inboxTableModel;
+                        break;
+                    case 1: // Outbox tab
+                        table = outboxTable;
+                        model = outboxTableModel;
+                        break;
+                    case 2: // Drafts tab
+                        table = dropsTable;
+                        model = dropsTableModel;
+                        break;
+                    default:
+                        break;
+                }
+                
+                // Get selected row index
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) { // If a row is selected
+                    // Retrieve data from selected row
+                    String sender = model.getValueAt(selectedRow, 0).toString();
+                    String receiver = model.getValueAt(selectedRow, 1).toString();
+                    String date = model.getValueAt(selectedRow, 2).toString();
+                    String messageType = model.getValueAt(selectedRow, 3).toString();
+                    
+                    // Construct message
+                    String message = "Sender: " + sender + "\n"
+                                   + "Receiver: " + receiver + "\n"
+                                   + "Date: " + date + "\n"
+                                   + "Message Type: " + messageType;
+                    
+                    // Show message in a dialog
+                    JOptionPane.showMessageDialog(tabbedpane.this, message, "Message Details", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    // Inform user to select a row
+                    JOptionPane.showMessageDialog(tabbedpane.this, "Please select a message to view details.", "No message selected", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
         buttonPanel.add(confirmButton);
@@ -149,13 +191,56 @@ public class tabbedpane extends JFrame {
         buttonPanel.add(composeButton);
 
         JButton deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int tabIndex = tabbedPane.getSelectedIndex();
+                JTable table = null;
+                DefaultTableModel model = null;
+                
+                // Determine which table is currently active
+                switch (tabIndex) {
+                    case 0: // Inbox tab
+                        table = inboxTable;
+                        model = inboxTableModel;
+                        break;
+                    case 1: // Outbox tab
+                        table = outboxTable;
+                        model = outboxTableModel;
+                        break;
+                    case 2: // Drafts tab
+                        table = dropsTable;
+                        model = dropsTableModel;
+                        break;
+                    default:
+                        break;
+                }
+                
+                // Get selected row index
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) { // If a row is selected
+                    // Retrieve data from selected row
+                    String sender = model.getValueAt(selectedRow, 0).toString();
+                    String receiver = model.getValueAt(selectedRow, 1).toString();
+                    String date = model.getValueAt(selectedRow, 2).toString();
+                    String messageType = model.getValueAt(selectedRow, 3).toString();
+                    
+                    // Add the row to the RecycleBin
+                    recycleBin.addRow(new Object[]{sender, receiver, date, messageType});
+                    
+                    // Remove the row from the current table
+                    model.removeRow(selectedRow);
+                } else {
+                    // Inform user to select a row
+                    JOptionPane.showMessageDialog(tabbedpane.this, "Please select a message to delete.", "No message selected", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
         buttonPanel.add(deleteButton);
 
         JButton moveToBinButton = new JButton("Bin");
         moveToBinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RecycleBin recycle = new RecycleBin(tabbedpane.this);
-                recycle.setVisible(true);
+                recycleBin.setVisible(true);
                 dispose();
             }
         });
