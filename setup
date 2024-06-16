@@ -1,1 +1,117 @@
+package javaswingtest;
 
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class Setup extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textField_3;
+    private JTextField textField;
+    private JTextField textField_1;
+    private JTextField textField_4;
+    private tabbedpane tabbedPane;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Setup frame = new Setup();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public Setup() {
+    	setTitle("Set up account");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 398, 308);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel lblNewLabel_2 = new JLabel("Set up Account");
+        lblNewLabel_2.setBounds(100, 11, 125, 14);
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+        contentPane.add(lblNewLabel_2);
+
+        JLabel lblNewLabel_3 = new JLabel("Basic Info");
+        lblNewLabel_3.setBounds(29, 48, 56, 14);
+        lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+        contentPane.add(lblNewLabel_3);
+
+        JLabel lblNewLabel = new JLabel("Name");
+        lblNewLabel.setBounds(29, 73, 65, 14);
+        contentPane.add(lblNewLabel);
+
+        JLabel lblEmail = new JLabel("Email");
+        lblEmail.setBounds(29, 98, 65, 14);
+        contentPane.add(lblEmail);
+
+        JLabel lblNewLabel_1 = new JLabel("Birthday");
+        lblNewLabel_1.setBounds(29, 126, 72, 14);
+        contentPane.add(lblNewLabel_1);
+
+        JLabel lblHome = new JLabel("Address");
+        lblHome.setBounds(29, 154, 65, 14);
+        contentPane.add(lblHome);
+
+        textField = new JTextField();
+        textField.setBounds(100, 70, 148, 20);
+        contentPane.add(textField);
+        textField.setColumns(10);
+
+        textField_1 = new JTextField();
+        textField_1.setBounds(100, 95, 148, 20);
+        contentPane.add(textField_1);
+        textField_1.setColumns(10);
+
+        textField_3 = new JTextField();
+        textField_3.setBounds(100, 123, 148, 20);
+        contentPane.add(textField_3);
+        textField_3.setColumns(10);
+
+        textField_4 = new JTextField();
+        textField_4.setBounds(100, 151, 148, 20);
+        contentPane.add(textField_4);
+        textField_4.setColumns(10);
+
+        JButton btnNewButton = new JButton("Skip");
+        btnNewButton.setBounds(61, 201, 72, 23);
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	tabbedpane tabbedPane = new tabbedpane();
+                tabbedPane.setVisible(true);
+                dispose();
+            }
+        });
+        
+        contentPane.add(btnNewButton);
+
+        JButton btnContinue = new JButton("Continue");
+        btnContinue.setBounds(185, 201, 89, 23);
+        btnContinue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	tabbedpane tabbedPane = new tabbedpane();
+                tabbedPane.setVisible(true);
+                dispose();
+            }
+        });
+        
+        contentPane.add(btnContinue);
+
+    }
+}
